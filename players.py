@@ -12,15 +12,28 @@ class Player:
     A base class to represent a players of the Tic Tac Toe game. It is extended
     to create human players and computer players
     """
-
     def __init__(self, id, name, letter):
+        """
+        :param id: An integer ID of the player, that corresponds to its index in the Game.players array
+        :param name: A string representing the name of the player.
+        :param letter: A character representing the move this player makes. Player 1's letter is 'X' and player 2's letter is 'O'
+        """
         self.id = id
         self.name = name
         self.letter = letter
 
 
 class HumanPlayer(Player):
+    """
+    A class that extends the Player class and represents a human player. It
+    gets its moves by asking the user for command-line input
+    """
     def __init__(self, id, name, letter):
+        """
+        :param id: An integer ID of the player, that corresponds to its index in the Game.players array
+        :param name: A string representing the name of the player. All strings are valid except for "cpu"
+        :param letter: A character representing the move this player makes. Player 1's letter is 'X' and player 2's letter is 'O'
+        """
         super().__init__(id, name, letter)
         self.is_human = True
 
@@ -28,6 +41,8 @@ class HumanPlayer(Player):
     def get_next_move(board_, move_count):
         """
         Gets the next move for cur_player by asking for the row and column the player would like to move.
+        :param board_: An unused parameter that is only included to allow the Game to call for the next move identically regardless of the player
+        :param move_count: Unused parameter just like board_
         :return: The row and column of the next move
         """
         # Get row and column using command-line input for human player
@@ -46,7 +61,16 @@ class HumanPlayer(Player):
 
 
 class ComputerPlayer(Player):
+    """
+    A class that extends the Player class and represents a computer player. It
+    gets its moves by using the minimax algorithm. See the README for details
+    """
     def __init__(self, id, name, letter):
+        """
+        :param id: An integer ID of the player, that corresponds to its index in the Game.players array
+        :param name: A string representing the name of the player. Always "cpu" for computer players
+        :param letter: A character representing the move this player makes. Player 1's letter is 'X' and player 2's letter is 'O'
+        """
         super().__init__(id, name, letter)
         self.is_human = False
 
@@ -67,6 +91,7 @@ class ComputerPlayer(Player):
         """
         An implementation of the minimax algorithm with alpha-beta pruning which determines the best move, assuming the opponent plays optimally
         This algorithm associates board states with quantitative values and tries to maximize the minimum value board state the opponent can achieve
+        See the README for more details
 
         :param board: A 3x3 array of chars representing the board configuration at the current level of recursion
         :param depth: An integer specifying the depth of the board at the current level of recursion. Depth begins at 9 at the start of the game

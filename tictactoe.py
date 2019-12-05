@@ -106,7 +106,7 @@ class Game:
         next_player = self.players[id]  # The id of each player is identical to its index in the players array
         return next_player
 
-    def reset_board(self, name_1=None, name_2=None):
+    def reset(self, name_1=None, name_2=None):
         """
         Reset the board to prepare for a new game
         """

@@ -32,7 +32,7 @@ if __name__ == "__main__":
     game = Game()
 
     while playing:
-        game.reset_board()
+        game.reset()
         game.play_game()
         playing = ask_to_play_again()
 

@@ -69,7 +69,7 @@ class TicTacToeTest(unittest.TestCase):
         self.assertEqual(player, self.game.players[0], 'Alternate from player 2'
             ' to player 1 not working')
 
-    def test_reset_board(self):
+    def test_reset(self):
         # Test resetting all board attributes after a game has been completed
 
         #First update the game to reflect a completed game
@@ -79,7 +79,7 @@ class TicTacToeTest(unittest.TestCase):
         self.game.cur_player = self.game.players[1]
 
         #Then reset the board and compare it to the desired values
-        self.game.reset_board("name 1", "name 2")
+        self.game.reset("name 1", "name 2")
         self.assertEqual(self.game.board, [["-", "-", "-"], ["-", "-", "-"], ["-", "-", "-"]],
             'Game board does not reset to empty board')
         self.assertEqual(self.game.status, IN_PROGRESS, 'Game status does not reset to in progress')
