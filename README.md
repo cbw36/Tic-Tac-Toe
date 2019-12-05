@@ -22,13 +22,11 @@ When it is a human player's turn, they will be prompted to enter the row where t
 This is indexed where the top row is 1, the middle row is 2, and the bottom row is 3. They will then be
 asked for the column. The left column is 1, the middle column is 2, and then right column is 3. So every
 cell in the board can be accessed via the following row, column pairs:
-\
-(1,1) | (1,2) | (1,3)
-\
-(2,1) | (2,2) | (2,3)
-\
-(3,1) | (3,2) | (3,3)
-\
+
+    (1,1) | (1,2) | (1,3)
+    (2,1) | (2,2) | (2,3)
+    (3,1) | (3,2) | (3,3)
+    
 The game will end when either one player has won or all the cells in the board are occupied. At this
 point you will be asked if you would like to play again. If you enter no, the program will end. If you
 enter yes, you will be prompted to enter the names of the players in order to allow changing which
