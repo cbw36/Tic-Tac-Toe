@@ -5,7 +5,7 @@ players, where either player is either a human player or a computer player. Huma
 moves using command-line input, and the computer player selects its move using the minimax algorithm with
 alpha-beta pruning.
 
-##How to Play
+## How to Play
 Navigate to the top level of the project directory and run
 ```bash
 python3 main.py
@@ -34,11 +34,11 @@ point you will be asked if you would like to play again. If you enter no, the pr
 enter yes, you will be prompted to enter the names of the players in order to allow changing which
 players are human and computer.
 
-##Code Structure
+## Code Structure
 This program follows an object oriented implementation. There are 4 classes: Game, Player,
 HumanPlayer, and ComputerPlayer.
 
-###Game
+### Game
 This class represents the game and is responsible for controlling the flow of an individual game and
 maintaining the attributes of a game. In order to run a game, the necessary attributes are:
 - board: a 3x3 matrix of characters that represents the current configuration of the game board
@@ -55,19 +55,19 @@ move by calling its get_next_move() function. Then, Game.play_game() will update
 check if this move ended the game, and alternate whose turn it is. Once a call to Game.check_status() indicates that
 the game is over, the program outputs who the winner was if one exists, or that the game was a draw.
 
-###Player
+### Player
 This is a simple base class that is extended by HumanPlayer and ComputerPlayer. Both children classes have the same
 attributes and to get their next move, they can both call get_next_move() in an identical manner.
 
-###HumanPlayer
+### HumanPlayer
 This class represents a human player. It only implements one method: get_next_move(). This will ask the player
 where they would like to move, and return their move to the game.
 
-###ComputerPlayer (And Minimax)
+### ComputerPlayer (And Minimax)
 This class represents a computer player. Its get_next_move() method will select the next move using the minimax 
 algorithm with alpha-beta pruning. 
 
-##Minimax with Alpha-Beta Pruning
+## Minimax
 Minimax is a recursive algorithm which determines the best move a player can make on a given game state,
 assuming the opponent plays optimally. The algorithm assigns values to board configurations, dependent on if 
 the board configuration represents a win, a loss, a tie, or an ongoing game. The algorithm assumes that the 
@@ -143,7 +143,7 @@ We can see from this example that calling get_next_move will return that the com
 This is because moving to the bottom left corner has a value of +10, while moving to the bottom-center has a value of 0, and
 moving to the bottom right corner has a value of -10. 
                          
-##How to Test
+## How to Test
 Navigate to the top level of the project directory and run
 ```bash
 python3 test.py
