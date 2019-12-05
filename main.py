@@ -1,4 +1,4 @@
-from TicTacToe import TicTacToe
+from tictactoe import Game
 
 """
 The purpose of this programming challenge is to gauge your understanding of algorithms, data structures, and software
@@ -8,6 +8,7 @@ The task is to create a tic-tac-toe game. There is no need to create a graphical
 functions necessary to play a game, along with enough test cases to prove that the game works. The tic-tac-toe grid size
 is limited to 3x3 for the purposes of this exercise.
 """
+
 
 def ask_to_play_again():
     """
@@ -28,7 +29,7 @@ def ask_to_play_again():
 if __name__ == "__main__":
     print("Welcome to Tic Tac Toe")
     playing = True
-    game = TicTacToe()
+    game = Game()
 
     while playing:
         game.reset_board()

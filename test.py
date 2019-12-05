@@ -1,11 +1,11 @@
 import unittest
-from TicTacToe import TicTacToe, IN_PROGRESS, WON, DRAW, MAX_NUM_MOVES
-from Player import Player, ComputerPlayer, HumanPlayer, WINNER, LOSER, TIED
+from tictactoe import Game, IN_PROGRESS, WON, DRAW, MAX_NUM_MOVES
+from players import Player, ComputerPlayer, HumanPlayer, WINNER, LOSER, TIED
 
 class TicTacToeTest(unittest.TestCase):
 
     def setUp(self):
-        self.game = TicTacToe("player 1", "player 2")
+        self.game = Game("player 1", "player 2")
 
     def test_init(self):
         self.assertEqual(self.game.board, [["-", "-", "-"], ["-", "-", "-"], ["-", "-", "-"]],

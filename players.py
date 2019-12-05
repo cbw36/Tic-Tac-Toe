@@ -6,9 +6,11 @@ IN_PROGRESS = 1
 MAX = 100
 MIN = -100
 
+
 class Player:
     """
-    A class to represent a players of the Tic Tac Toe game.
+    A base class to represent a players of the Tic Tac Toe game. It is extended
+    to create human players and computer players
     """
 
     def __init__(self, id, name, letter):
@@ -16,29 +18,32 @@ class Player:
         self.name = name
         self.letter = letter
 
+
 class HumanPlayer(Player):
     def __init__(self, id, name, letter):
         super().__init__(id, name, letter)
         self.is_human = True
 
-    def get_next_move(self, board_, move_count):
+    @staticmethod
+    def get_next_move(board_, move_count):
         """
         Gets the next move for cur_player by asking for the row and column the player would like to move.
         :return: The row and column of the next move
         """
         # Get row and column using command-line input for human player
-        row = input("Enter the row where you want to make your move. Valid rows are 1, 2, and 3: ") # 1 is the top row, 3 is the bottom row
+        row = input("Enter the row where you want to make your move. Valid rows are 1, 2, and 3: ")  # 1 is the top row, 3 is the bottom row
         while row not in ("1", "2", "3"):
             row = input("Row " + row + " is not an valid row. Enter the row where you want to move. "
                                        "Valid rows are 1, 2, and 3: ")
-        col = input("Enter the column where you want to make your move. Valid columns are 1, 2, and 3: ") # 1 is the left column, 3 is the right column
+        col = input("Enter the column where you want to make your move. Valid columns are 1, 2, and 3: ")  # 1 is the left column, 3 is the right column
         while col not in ("1", "2", "3"):
             col = input("Column " + col + " is not an valid column. Enter the column where you want to move. "
                                           "Valid columns are 1, 2, and 3: ")
-        row = int(row) - 1 # Make zero-indexed to access the board matrix
-        col = int(col) - 1 # Make zero-indexed to access the board matrix
+        row = int(row) - 1  # Make zero-indexed to access the board matrix
+        col = int(col) - 1  # Make zero-indexed to access the board matrix
 
         return row, col
+
 
 class ComputerPlayer(Player):
     def __init__(self, id, name, letter):
@@ -50,8 +55,8 @@ class ComputerPlayer(Player):
         Gets the next move for cur_player by using the minimax algorithm.
         :return: The row and column of the next move
         """
-        board = board_ # Create a copy of the board to pass to minimax so as to not distort the board
-        depth = 9 - move_count # Integer specifying depth of the board. At start of game the depth = 9 and when game all spaces are occupied the depth = 0
+        board = board_  # Create a copy of the board to pass to minimax so as to not distort the board
+        depth = 9 - move_count  # Integer specifying depth of the board. At start of game the depth = 9 and when game all spaces are occupied the depth = 0
         maximizing = True  # Minimax begins with a maximization step
         best_move = self.minimax(board=board, depth=depth, maximizing=maximizing, letter=self.letter, alpha=-100, beta=100)
         row, col = best_move[0], best_move[1]
@@ -66,20 +71,20 @@ class ComputerPlayer(Player):
         :param board: A 3x3 array of chars representing the board configuration at the current level of recursion
         :param depth: An integer specifying the depth of the board at the current level of recursion. Depth begins at 9 at the start of the game
                       and decreases to 0 when all spaces are occupied
+        :param letter: The letter of the current player. Either X or O. Used to update the board once the player chooses a move
         :param maximizing: A boolean representing if this step is maximizing or minimizing
-        :param player: A Player representing the player who's turn it is to move at the current recursion level
         :param alpha: The best value that the maximizer currently can guarantee at the current level or above.
         :param beta: The best value that the minimizer currently can guarantee at the current level or above.
         :return: Array containing the row and col of the best move, and the value of the best move
         """
 
-        board_value = self.evaluate_board(board, depth) # Determine if the game is in progress, has a winner, or is a draw
-        if board_value in (WINNER, LOSER, TIED): #if game_over=10 then they won, if game_over=-10, then they lost
+        board_value = self.evaluate_board(board, depth)  # Determine if the game is in progress, has a winner, or is a draw
+        if board_value in (WINNER, LOSER, TIED):  # if game_over=10 then they won, if game_over=-10, then they lost
             return [-1, -1, board_value]
 
         # If there was no winner and no draw, then continue to recurse
         if maximizing:
-            best_move = [-1, -1, MIN] # Initialize the best move at this step as row=-1, col=-1, and value=-100. Every possible move will have a value > -100, so best_move will always be overwritten by a valid move
+            best_move = [-1, -1, MIN]  # Initialize the best move at this step as row=-1, col=-1, and value=-100. Every possible move will have a value > -100, so best_move will always be overwritten by a valid move
         else:
             best_move = [-1, -1, MAX]
 
@@ -92,11 +97,11 @@ class ComputerPlayer(Player):
             cur_move[0], cur_move[1] = r, c  # Update cur_move to contain the move at this level of recursion rather than lower levels
             if maximizing:
                 alpha = max(alpha, best_move[2])
-                if (cur_move[2] > best_move[2]):  # Update best_move if this move has a higher value than the current best_move
+                if cur_move[2] > best_move[2]:  # Update best_move if this move has a higher value than the current best_move
                     best_move = cur_move
             else:
                 beta = min(beta, best_move[2])
-                if (cur_move[2] < best_move[2]):
+                if cur_move[2] < best_move[2]:
                     best_move = cur_move
 
             if beta <= alpha:  # Stop searching the current move if a possibility has been found that proves this move worse than a previously found move.
@@ -109,6 +114,7 @@ class ComputerPlayer(Player):
         Evaluates the current state of the board and returns the board's value
         Only called from minimax, and is different from check_status, which checks only if the game is still playing, won, or a draw.
         :param board: A 3x3 matrix representing the board to be evaluated
+        :param depth: The current depth of recursion. Depth=9 when the board is empty and 0 when it is full
         :return: 10 if the game was won by the cpu who called minimax, -10 if lost, -1 otherwise
         """
         win_states = [
@@ -134,7 +140,7 @@ class ComputerPlayer(Player):
 
     @staticmethod
     def alternate_letters(letter):
-        if letter=="X":
+        if letter == "X":
             return "O"
         else:
             return "X"

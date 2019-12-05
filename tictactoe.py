@@ -1,4 +1,4 @@
-from Player import Player, HumanPlayer, ComputerPlayer
+from players import HumanPlayer, ComputerPlayer
 
 IN_PROGRESS = 1
 WON = 2
@@ -6,50 +6,22 @@ DRAW = 3
 
 MAX_NUM_MOVES = 9
 
-class TicTacToe:
+
+class Game:
     """
     A class to represent a Tic Tac Toe board with methods to play the game
     """
     def __init__(self, name_1=None, name_2=None):
-        """
-        :param board: Represents the board as a 3x3 matrix of characters, either '-', 'X', or 'O'
-        :param players: An array storing the two players as Player instances
-        :param status: Represents the status of the game as one of the constants IN_PROGRESS, WON, DRAW
-        :param move_count: Represents the number of moves played already. Once move_count = MAX_NUM_MOVES, the game is over
-        :param cur_player: Integer representing the index of the current player in the players array. Player 1 is first
-        """
-        self.board = [["-", "-", "-"], ["-", "-", "-"], ["-", "-", "-"]]  # '-' represents an empty space
-        self.players = self.get_players(name_1, name_2)
-        self.status = IN_PROGRESS
-        self.move_count = 0
-        self.cur_player = self.players[0]
-
-    def get_players(self, name_1=None, name_2=None):
-        """
-        Create the two players as Player instances.
-        Players are either HumanPlayer or ComputerPlayer depending on their name
-        """
-        if name_1 == None:
-            name_1 = input("Please enter the name of player 1. For a computer player, enter cpu: ")
-        if name_1 == "cpu":
-            player_1 = ComputerPlayer(0, name_1, "X")
-        else:
-            player_1 = HumanPlayer(0, name_1, "X")
-
-        if name_2 == None:
-            name_2 = input("Please enter the name of player 2. For a computer player, enter cpu: ")
-        if name_2 == "cpu":
-            player_2 = ComputerPlayer(1, name_2, "O")
-        else:
-            player_2 = HumanPlayer(1, name_2, "O")
-
-        return [player_1, player_2]
-
+        self.board = [["-", "-", "-"], ["-", "-", "-"], ["-", "-", "-"]]  # Represents the board as a 3x3 matrix of characters, either '-', 'X', or 'O'
+        self.players = self.get_players(name_1, name_2)  # An array storing the two players as Player instances
+        self.status = IN_PROGRESS  # Represents the status of the game as one of the constants IN_PROGRESS, WON, DRAW
+        self.move_count = 0  # Represents the number of moves played already. Once move_count = MAX_NUM_MOVES, the game is over
+        self.cur_player = self.players[0]  # Player instance representing the index of the current player in the players array. Player 1 is first
 
     def play_game(self):
         """
         The top-level controller for a Tic Tac Toe game
-        While the status of the TicTacToe object = IN_PROGRESS, the game is still in play
+        While the status of the Game object = IN_PROGRESS, the game is still in play
         The controller will get the next move, update the board corresponding to that move, check if the game is over, and alternate to the next player
         Once the game is over, output the winner of the game, or output that it ended in a draw
         """
@@ -63,7 +35,7 @@ class TicTacToe:
             self.status = self.check_status(row, col)  # Check if the game has ended
             self.cur_player = self.alternate_player()  # Iterate to the next player
 
-        #The game is no longer in progress. Execute code to end the game
+        # The game is no longer in progress. Execute code to end the game
         winning_player = self.alternate_player()  # The winning player is the player who made the last move. cur_player currently refers to the other player because cur_player was iterated at the end of the while loop, so iterate again to get the winning player
         if self.status == WON:
             print(winning_player.name + " has won the game.")
@@ -145,3 +117,25 @@ class TicTacToe:
         self.status = IN_PROGRESS
         self.move_count = 0
         self.cur_player = self.players[0]
+
+    @staticmethod
+    def get_players(name_1=None, name_2=None):
+        """
+        Create the two players as Player instances.
+        Players are either HumanPlayer or ComputerPlayer depending on their name
+        """
+        if name_1 is None:
+            name_1 = input("Please enter the name of player 1. For a computer player, enter cpu: ")
+        if name_1 == "cpu":
+            player_1 = ComputerPlayer(0, name_1, "X")
+        else:
+            player_1 = HumanPlayer(0, name_1, "X")
+
+        if name_2 is None:
+            name_2 = input("Please enter the name of player 2. For a computer player, enter cpu: ")
+        if name_2 == "cpu":
+            player_2 = ComputerPlayer(1, name_2, "O")
+        else:
+            player_2 = HumanPlayer(1, name_2, "O")
+
+        return [player_1, player_2]
